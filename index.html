@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Semiliguda.Inn — Comfortable Lodging</title>
+    <meta
+      name="description"
+      content="Semiliguda.Inn - Hygienic, affordable, and comfortable lodging with Free Wi-Fi, Complimentary breakfast, Smart TV, and Geyser in Semiliguda, Koraput."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <header id="navbar" class="navbar">
+      <div class="brand">
+        <div class="logo">
+          <img src="logo.png" alt="Semiliguda Inn Logo" />
+        </div>
+        <div class="brand-text">
+          <h2 class="site-title">Semiliguda.Inn</h2>
+          <p class="small">Comfort stay • Semiliguda, Koraput</p>
+        </div>
+      </div>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <button class="btn" onclick="scrollToSection('home')">Home</button>
+        <button class="btn" onclick="scrollToSection('about')">About</button>
+        <button class="btn primary" onclick="scrollToSection('booking')">
+          Book Now
+        </button>
+        <button class="btn" onclick="scrollToSection('contact')">
+          Contact
+        </button>
+      </nav>
+
+      <button
+        class="menu-toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+    </header>
+
+    <!-- HERO (slider + brand area) -->
+    <section class="hero">
+      <div class="hero-content">
+        <img src="logo.png" alt="Semiliguda Inn Logo" class="hero-logo" />
+        <h2 class="welcome">
+          Welcome to <span class="accent">Semiliguda.Inn</span>
+        </h2>
+        <p class="tagline">
+          Hygienic, Affordable, and Comfortable Lodging in Semiliguda.
+        </p>
+        <div class="benefits">
+          <span class="chip">Free Wi-Fi</span>
+          <span class="chip">Smart TV</span>
+          <span class="chip">Hot Water</span>
+          <span class="chip">Complimentary Breakfast</span>
+        </div>
+      </div>
+
+      <div class="hero-slider" aria-label="Hotel slideshow" tabindex="0">
+        <div class="slide active">
+          <img
+            src="https://picsum.photos/seed/inn1/1200/700"
+            alt="Deluxe Room"
+          />
+          <div class="slide-caption">Deluxe Rooms — Spacious & Modern</div>
+        </div>
+        <div class="slide">
+          <img
+            src="https://picsum.photos/seed/inn2/1200/700"
+            alt="Dining Area"
+          />
+          <div class="slide-caption">Hygienic Dining & Homely Meals</div>
+        </div>
+        <div class="slide">
+          <img
+            src="https://picsum.photos/seed/inn3/1200/700"
+            alt="Family Room"
+          />
+          <div class="slide-caption">Family-Friendly Accommodation</div>
+        </div>
+        <div class="slide">
+          <img src="https://picsum.photos/seed/inn4/1200/700" alt="Lobby" />
+          <div class="slide-caption">Cozy Lobby with Local Hospitality</div>
+        </div>
+
+        <button class="slider-btn prev" aria-label="Previous slide">❮</button>
+        <button class="slider-btn next" aria-label="Next slide">❯</button>
+      </div>
+    </section>
+
+    <!-- ROOMS: room-slider (carousel showing 4 at once on desktop) -->
+    <section id="home" class="room-slider-section">
+      <h3 class="section-title">Rooms & Gallery</h3>
+
+      <div class="room-slider" aria-label="Rooms carousel">
+        <button class="room-btn prev" aria-label="Previous rooms">❮</button>
+
+        <div class="room-track" role="list">
+          <article class="card" role="listitem">
+            <img
+              src="https://picsum.photos/seed/room1/800/600"
+              alt="Deluxe Room"
+            />
+            <div class="card-body">
+              <h4>Deluxe Room</h4>
+              <p>Spacious & modern amenities.</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem">
+            <img src="https://picsum.photos/seed/room2/800/600" alt="AC Room" />
+            <div class="card-body">
+              <h4>AC Room</h4>
+              <p>Cool comfort for peaceful rest.</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem">
+            <img
+              src="https://picsum.photos/seed/room3/800/600"
+              alt="Family Room"
+            />
+            <div class="card-body">
+              <h4>Family Room</h4>
+              <p>Perfect for families & groups.</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem">
+            <img
+              src="https://picsum.photos/seed/room4/800/600"
+              alt="Dining Area"
+            />
+            <div class="card-body">
+              <h4>Dining Area</h4>
+              <p>Clean, homely meals every day.</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem">
+            <img src="https://picsum.photos/seed/room5/800/600" alt="Lobby" />
+            <div class="card-body">
+              <h4>Lobby & Seating</h4>
+              <p>Relax with friendly hospitality.</p>
+            </div>
+          </article>
+
+          <article class="card" role="listitem">
+            <img src="https://picsum.photos/seed/room6/800/600" alt="Suite" />
+            <div class="card-body">
+              <h4>Suite</h4>
+              <p>Extra space and comfort for you.</p>
+            </div>
+          </article>
+        </div>
+
+        <button class="room-btn next" aria-label="Next rooms">❯</button>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+      <h3>About Semiliguda.Inn</h3>
+      <p>
+        Located in the heart of Semiliguda, Semiliguda.Inn offers clean,
+        affordable lodging with all basic amenities. Ideal for families,
+        tourists, and corporate guests — ensuring a peaceful stay experience.
+      </p>
+    </section>
+
+    <!-- BOOKING + MAP -->
+    <section id="booking" class="booking-map-section">
+      <h3>Book a Room / Find Us</h3>
+
+      <div class="booking-map-grid">
+        <div class="booking-form-wrap">
+          <form id="bookingForm" class="booking" novalidate>
+            <div class="row">
+              <div>
+                <label for="name">Full Name</label
+                ><input
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="Your name"
+                />
+              </div>
+              <div>
+                <label for="phone">Phone</label
+                ><input
+                  id="phone"
+                  name="phone"
+                  required
+                  placeholder="Mobile number"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="email">Email</label
+                ><input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="you@example.com"
+                />
+              </div>
+              <div>
+                <label for="guests">Guests</label
+                ><select id="guests" name="guests">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="checkin">Check-in</label
+                ><input id="checkin" name="checkin" type="date" required />
+              </div>
+              <div>
+                <label for="checkout">Check-out</label
+                ><input id="checkout" name="checkout" type="date" required />
+              </div>
+            </div>
+
+            <label for="message">Special Requests</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="3"
+              placeholder="Any requests..."
+            ></textarea>
+
+            <button class="btn primary" type="submit">
+              Send Booking Request
+            </button>
+            <p id="bookingStatus" class="small" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="map-container">
+          <iframe
+            title="Semiliguda Inn Location"
+            src="https://www.google.com/maps?q=18.7057514,82.8527222&z=17&output=embed"
+            loading="lazy"
+          ></iframe>
+          <div class="map-info">
+            <p>📍 Nandapur Road, Semiliguda — Opp. RI Office</p>
+            <p>Dist. Koraput, Odisha — PIN: 764036</p>
+            <a
+              href="https://maps.app.goo.gl/nQfadJeKSMwYwHtJ7?g_st=aw"
+              target="_blank"
+              class="btn"
+              >Open in Google Maps</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-section">
+      <h3>Contact & Amenities</h3>
+      <div class="contact-grid">
+        <div class="contact-details">
+          <p>📞 <a href="tel:06853315167">06853-315167</a></p>
+          <p>
+            💬
+            <a href="https://wa.me/917077574333" target="_blank"
+              >+91 70775 74333 (WhatsApp)</a
+            >
+          </p>
+          <p>
+            ✉️
+            <a href="mailto:semiligudainn@gmail.com">semiligudainn@gmail.com</a>
+          </p>
+        </div>
+        <div class="amenities">
+          <strong>Amenities</strong>
+          <p>
+            Complimentary breakfast • Free Wi-Fi • Hygienic food • Hot water •
+            Geyser • Smart TV
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2025 Semiliguda.Inn | Hygienic • Affordable • Comfortable</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
