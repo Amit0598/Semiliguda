@@ -1,28 +1,25 @@
-// js/script.js - hero slider, room carousel, booking popup (WA/email), nav toggle, reveal, lazyload
+// script.js — Full interactive site script for Semiliguda.Inn
 document.addEventListener("DOMContentLoaded", function () {
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) =>
     Array.from((ctx || document).querySelectorAll(sel));
 
-  /* ========================================
-     Smooth Scroll — "home" goes to page top
-  ======================================== */
+  /* ====================================================
+     Smooth Scroll — "home" jumps to top, others scrollIntoView
+  ==================================================== */
   window.scrollToSection = function (id) {
     if (!id) return;
-
-    // Special case for "home" to scroll to top
     if (id === "home") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
-
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  /* ========================================
-     Mobile Navigation Toggle
-  ======================================== */
+  /* ====================================================
+     Mobile navigation toggle
+  ==================================================== */
   (function navToggle() {
     const menuToggle = $(".menu-toggle");
     const navLinks = $(".nav-links");
@@ -33,70 +30,57 @@ document.addEventListener("DOMContentLoaded", function () {
       menuToggle.setAttribute("aria-expanded", String(open));
     });
 
-    $$(".nav-links .btn", navLinks).forEach((b) =>
-      b.addEventListener("click", () => {
+    // Close mobile menu after clicking a link
+    $$(".nav-links .btn", navLinks).forEach((btn) =>
+      btn.addEventListener("click", () => {
         navLinks.classList.remove("open");
         menuToggle.setAttribute("aria-expanded", "false");
       })
     );
   })();
 
-  /* ========================================
-     HERO SLIDER (Auto, Touch, Keyboard)
-  ======================================== */
+  /* ====================================================
+     HERO SLIDER (auto, manual, swipe, keyboard, pause on hover)
+  ==================================================== */
   (function heroSlider() {
     const slider = $(".hero-slider");
     if (!slider) return;
     const slides = $$(".slide", slider);
     if (!slides.length) return;
 
-    let next = slider.querySelector(".slider-btn.next");
-    let prev = slider.querySelector(".slider-btn.prev");
+    const nextBtn = slider.querySelector(".slider-btn.next");
+    const prevBtn = slider.querySelector(".slider-btn.prev");
 
-    // Create buttons if not found
-    if (!next) {
-      next = document.createElement("button");
-      next.className = "slider-btn next";
-      next.innerText = "❯";
-      next.setAttribute("aria-label", "Next slide");
-      slider.appendChild(next);
-    }
-    if (!prev) {
-      prev = document.createElement("button");
-      prev.className = "slider-btn prev";
-      prev.innerText = "❮";
-      prev.setAttribute("aria-label", "Previous slide");
-      slider.appendChild(prev);
-    }
-
-    let index = 0;
+    let current = 0;
     const INTERVAL = 5000;
     let timer = null;
     let paused = false;
 
     function show(i) {
-      index = (i + slides.length) % slides.length;
+      current = (i + slides.length) % slides.length;
       slides.forEach((s, idx) => {
-        s.classList.toggle("active", idx === index);
-        s.setAttribute("aria-hidden", idx === index ? "false" : "true");
+        s.classList.toggle("active", idx === current);
+        s.setAttribute("aria-hidden", idx === current ? "false" : "true");
       });
     }
 
-    function nextSlide() {
-      show(index + 1);
+    function next() {
+      show(current + 1);
     }
-    function prevSlide() {
-      show(index - 1);
+    function prev() {
+      show(current - 1);
     }
 
-    next.addEventListener("click", () => {
-      nextSlide();
-      restart();
-    });
-    prev.addEventListener("click", () => {
-      prevSlide();
-      restart();
-    });
+    if (nextBtn)
+      nextBtn.addEventListener("click", () => {
+        next();
+        restart();
+      });
+    if (prevBtn)
+      prevBtn.addEventListener("click", () => {
+        prev();
+        restart();
+      });
 
     slider.addEventListener("mouseenter", () => (paused = true));
     slider.addEventListener("mouseleave", () => (paused = false));
@@ -125,10 +109,10 @@ document.addEventListener("DOMContentLoaded", function () {
         "touchend",
         () => {
           if (deltaX > 40) {
-            prevSlide();
+            prev();
             restart();
           } else if (deltaX < -40) {
-            nextSlide();
+            next();
             restart();
           }
           startX = 0;
@@ -141,11 +125,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Keyboard support
     slider.addEventListener("keydown", (e) => {
       if (e.key === "ArrowLeft") {
-        prevSlide();
+        prev();
         restart();
       }
       if (e.key === "ArrowRight") {
-        nextSlide();
+        next();
         restart();
       }
     });
@@ -153,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function start() {
       stop();
       timer = setInterval(() => {
-        if (!paused) nextSlide();
+        if (!paused) next();
       }, INTERVAL);
     }
     function stop() {
@@ -169,21 +153,21 @@ document.addEventListener("DOMContentLoaded", function () {
     start();
   })();
 
-  /* ========================================
-     ROOM CAROUSEL (Auto + Manual)
-  ======================================== */
+  /* ====================================================
+     ROOM CAROUSEL (groups/dots/responsive/auto/manual)
+     - groups of visible slides based on viewport (1..4)
+     - dots represent groups
+  ==================================================== */
   (function roomCarousel() {
-    const slider = document.querySelector(".room-slider");
+    const slider = $(".room-slider");
     if (!slider) return;
-    const track = slider.querySelector(".room-track");
-    const slides = slider.querySelectorAll(".room-track .card");
-    const btnNext = slider.querySelector(".room-btn.next");
-    const btnPrev = slider.querySelector(".room-btn.prev");
-    if (!track || !slides.length || !btnNext || !btnPrev) return;
+    const track = $(".room-track", slider);
+    const slides = $$(".card", slider);
+    const btnNext = $(".room-btn.next", slider);
+    const btnPrev = $(".room-btn.prev", slider);
+    const dotsContainer = $(".room-dots", slider);
 
-    let index = 0;
-    let autoTimer = null;
-    const AUTO_MS = 4000;
+    if (!track || slides.length === 0) return;
 
     function visibleCount() {
       const w = window.innerWidth;
@@ -193,46 +177,88 @@ document.addEventListener("DOMContentLoaded", function () {
       return 4;
     }
 
+    function groupCount(vc = visibleCount()) {
+      return Math.max(1, Math.ceil(slides.length / vc));
+    }
+
+    // Create/update dots
+    function renderDots() {
+      if (!dotsContainer) return;
+      const vc = visibleCount();
+      const groups = groupCount(vc);
+      dotsContainer.innerHTML = "";
+      for (let i = 0; i < groups; i++) {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.setAttribute("aria-label", `Go to group ${i + 1}`);
+        b.addEventListener("click", () => {
+          state.groupIndex = i;
+          update();
+          restartAuto();
+        });
+        dotsContainer.appendChild(b);
+      }
+    }
+
+    // state
+    const state = {
+      groupIndex: 0,
+      autoTimer: null,
+      AUTO_MS: 4000,
+    };
+
+    // update transform and dot active
     function update() {
+      const vc = visibleCount();
       const gap = parseFloat(getComputedStyle(track).gap) || 16;
       const slideWidth = slides[0].getBoundingClientRect().width + gap;
-      const maxIndex = Math.max(0, slides.length - visibleCount());
-      if (index > maxIndex) index = 0;
-      if (index < 0) index = maxIndex;
-      track.style.transform = `translateX(-${index * slideWidth}px)`;
+      const groups = groupCount(vc);
+      if (state.groupIndex >= groups) state.groupIndex = 0;
+      if (state.groupIndex < 0) state.groupIndex = groups - 1;
+      const offset = state.groupIndex * vc * slideWidth;
+      track.style.transform = `translateX(-${offset}px)`;
+      // highlight correct dot
+      if (dotsContainer) {
+        const dots = Array.from(dotsContainer.children);
+        dots.forEach((d, i) =>
+          d.classList.toggle("active", i === state.groupIndex)
+        );
+      }
     }
 
-    function next() {
-      index = (index + 1) % slides.length;
+    function nextGroup() {
+      state.groupIndex = (state.groupIndex + 1) % groupCount();
       update();
     }
-    function prev() {
-      index = (index - 1 + slides.length) % slides.length;
+    function prevGroup() {
+      state.groupIndex = (state.groupIndex - 1 + groupCount()) % groupCount();
       update();
     }
 
-    btnNext.addEventListener("click", () => {
-      next();
-      restartAuto();
-    });
-    btnPrev.addEventListener("click", () => {
-      prev();
-      restartAuto();
-    });
+    if (btnNext)
+      btnNext.addEventListener("click", () => {
+        nextGroup();
+        restartAuto();
+      });
+    if (btnPrev)
+      btnPrev.addEventListener("click", () => {
+        prevGroup();
+        restartAuto();
+      });
 
-    // Auto-scroll
+    // pause auto while hovering the whole slider
+    slider.addEventListener("mouseenter", stopAuto);
+    slider.addEventListener("mouseleave", startAuto);
+
+    // auto
     function startAuto() {
       stopAuto();
-      autoTimer = setInterval(() => {
-        const maxIndex = Math.max(0, slides.length - visibleCount());
-        index = index < maxIndex ? index + 1 : 0;
-        update();
-      }, AUTO_MS);
+      state.autoTimer = setInterval(() => nextGroup(), state.AUTO_MS);
     }
     function stopAuto() {
-      if (autoTimer) {
-        clearInterval(autoTimer);
-        autoTimer = null;
+      if (state.autoTimer) {
+        clearInterval(state.autoTimer);
+        state.autoTimer = null;
       }
     }
     function restartAuto() {
@@ -240,14 +266,72 @@ document.addEventListener("DOMContentLoaded", function () {
       startAuto();
     }
 
-    window.addEventListener("resize", update);
-    update();
+    // Recompute on resize (debounced)
+    let rtid = null;
+    function onResize() {
+      clearTimeout(rtid);
+      rtid = setTimeout(() => {
+        renderDots();
+        update();
+      }, 120);
+    }
+    window.addEventListener("resize", onResize);
+
+    // init
+    renderDots();
+    // reveal observer will add .in-view to cards; ensure at least layout computed
+    setTimeout(() => update(), 50);
     startAuto();
   })();
 
-  /* ========================================
-     BOOKING POPUP (WhatsApp / Email)
-  ======================================== */
+  /* ====================================================
+     CARD MINI-SLIDERS — each .card-slider cycles internal images
+     - pauses on hover / focus
+  ==================================================== */
+  (function cardSliders() {
+    const sliders = document.querySelectorAll(".card-slider");
+    if (!sliders || sliders.length === 0) return;
+
+    sliders.forEach((slider) => {
+      const imgs = Array.from(slider.querySelectorAll("img"));
+      if (imgs.length <= 1) {
+        // if only one image, make it visible
+        if (imgs[0]) imgs[0].classList.add("active");
+        return;
+      }
+      let i = 0;
+      let interval = null;
+      const INTERVAL = 3000;
+      imgs.forEach((img, idx) => img.classList.toggle("active", idx === 0));
+
+      function start() {
+        stop();
+        interval = setInterval(() => {
+          imgs[i].classList.remove("active");
+          i = (i + 1) % imgs.length;
+          imgs[i].classList.add("active");
+        }, INTERVAL);
+      }
+      function stop() {
+        if (interval) {
+          clearInterval(interval);
+          interval = null;
+        }
+      }
+
+      // pause on hover & focus
+      slider.addEventListener("mouseenter", stop);
+      slider.addEventListener("mouseleave", start);
+      slider.addEventListener("focusin", stop);
+      slider.addEventListener("focusout", start);
+
+      start();
+    });
+  })();
+
+  /* ====================================================
+     BOOKING FORM — popup choice (WhatsApp or Email)
+  ==================================================== */
   (function bookingHandler() {
     const form = document.getElementById("bookingForm");
     const status = document.getElementById("bookingStatus");
@@ -256,13 +340,13 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       const get = (id) => (document.getElementById(id)?.value || "").trim();
-      const name = get("name"),
-        phone = get("phone"),
-        email = get("email"),
-        guests = get("guests") || "1",
-        checkin = get("checkin"),
-        checkout = get("checkout"),
-        message = get("message");
+      const name = get("name");
+      const phone = get("phone");
+      const email = get("email");
+      const guests = get("guests") || "1";
+      const checkin = get("checkin");
+      const checkout = get("checkout");
+      const message = get("message");
 
       if (!name || !phone || !checkin || !checkout) {
         status.textContent = "⚠️ Please fill all required fields.";
@@ -298,8 +382,8 @@ document.addEventListener("DOMContentLoaded", function () {
             <h3 style="margin:0 0 8px;color:var(--accent,#0f766e)">Send Booking Request</h3>
             <p style="margin:0 0 12px;color:#374151">Choose where to send your booking details</p>
             <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-              <button id="sendWhatsapp" class="btn primary" style="min-width:120px;padding:8px 12px">📱 WhatsApp</button>
-              <button id="sendEmail" class="btn" style="min-width:120px;padding:8px 12px">📧 Email</button>
+              <button id="sendWhatsapp" class="btn primary" style="min-width:120px">📱 WhatsApp</button>
+              <button id="sendEmail" class="btn" style="min-width:120px">📧 Email</button>
             </div>
             <button id="popupClose" aria-label="Close" style="position:absolute;right:10px;top:8px;background:none;border:none;font-size:18px;cursor:pointer;">✖</button>
           </div>`;
@@ -312,30 +396,40 @@ document.addEventListener("DOMContentLoaded", function () {
       const waBtn = popup.querySelector("#sendWhatsapp");
       const emBtn = popup.querySelector("#sendEmail");
 
-      function closePopup() {
-        popup.style.display = "none";
-      }
-
+      const closePopup = () => (popup.style.display = "none");
       overlay.onclick = closePopup;
       close.onclick = closePopup;
 
       waBtn.onclick = () => {
         sendViaWhatsApp(message);
         closePopup();
-        status.textContent = "WhatsApp opened.";
+        if (status) {
+          status.textContent = "WhatsApp opened.";
+          status.style.color = "";
+        }
       };
       emBtn.onclick = () => {
         sendViaEmail(message);
         closePopup();
-        status.textContent = "Opening email client...";
+        if (status) {
+          status.textContent = "Opening email client...";
+          status.style.color = "";
+        }
       };
     }
 
     function sendViaWhatsApp(msg) {
-      const number = "917077574333";
+      const number = "917077574333"; // ensure country code included
       const url = `https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
-      window.open(url, "_blank");
+      try {
+        const w = window.open(url, "_blank");
+        if (w) w.focus();
+        else window.location.href = url;
+      } catch (e) {
+        window.location.href = url;
+      }
     }
+
     function sendViaEmail(msg) {
       const subject = encodeURIComponent("Booking Request — Semiliguda.Inn");
       const body = encodeURIComponent(
@@ -345,9 +439,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   })();
 
-  /* ========================================
-     Scroll Reveal for Cards
-  ======================================== */
+  /* ====================================================
+     Scroll reveal: add .in-view when cards appear
+  ==================================================== */
   (function reveal() {
     const cards = $$(".card");
     if (!cards.length) return;
@@ -369,18 +463,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   })();
 
-  /* ========================================
-     Lazy Load Images
-  ======================================== */
-  (function lazyImgs() {
+  /* ====================================================
+     Lazy-load: ensure <img loading="lazy"> on images
+  ==================================================== */
+  (function lazyLoad() {
     $$("img").forEach((img) => {
       if (!img.hasAttribute("loading")) img.setAttribute("loading", "lazy");
     });
   })();
 
-  /* ========================================
-     Keyboard Nav Support
-  ======================================== */
+  /* ====================================================
+     Keyboard accessibility for nav buttons
+  ==================================================== */
   document.querySelectorAll(".nav-links .btn").forEach((btn) => {
     btn.setAttribute("tabindex", "0");
     btn.addEventListener("keydown", (e) => {
