@@ -48,7 +48,7 @@
       </button>
     </header>
 
-    <!-- HERO (slider + brand area) -->
+    <!-- HERO SECTION -->
     <section class="hero">
       <div class="hero-content">
         <img src="logo.png" alt="Semiliguda Inn Logo" class="hero-logo" />
@@ -69,7 +69,6 @@
       <div class="hero-slider" aria-label="Hotel slideshow" tabindex="0">
         <div class="slide active">
           <img src="top_slider1.jpg" alt="Deluxe Room" />
-
           <div class="slide-caption">Deluxe Rooms — Spacious & Modern</div>
         </div>
         <div class="slide">
@@ -90,72 +89,96 @@
       </div>
     </section>
 
-    <!-- ROOMS: room-slider (carousel showing 4 at once on desktop) -->
+    <!-- ROOMS GALLERY -->
     <section id="home" class="room-slider-section">
       <h3 class="section-title">Rooms & Gallery</h3>
-
-      <div class="room-slider" aria-label="Rooms carousel">
+      <div class="room-slider">
         <button class="room-btn prev" aria-label="Previous rooms">❮</button>
-
-        <div class="room-track" role="list">
-          <article class="card" role="listitem">
-            <img
-              src="https://picsum.photos/seed/room1/800/600"
-              alt="Deluxe Room"
-            />
+        <div class="room-track">
+          <!-- ROOM 1 -->
+          <article class="card">
+            <div class="card-slider">
+              <img src="delux1.jpg" alt="Room 1a" />
+              <img src="delux2.jpg" alt="Room 1b" />
+              <img src="delux3.jpg" alt="Room 1c" />
+            </div>
             <div class="card-body">
               <h4>Deluxe Room</h4>
               <p>Spacious & modern amenities.</p>
             </div>
           </article>
 
-          <article class="card" role="listitem">
-            <img src="https://picsum.photos/seed/room2/800/600" alt="AC Room" />
+          <!-- ROOM 2 -->
+          <article class="card">
+            <div class="card-slider">
+              <img src="ac1.jpg" alt="Room 2a" />
+              <img src="ac2.jpg" alt="Room 2b" />
+              <img src="ac3.jpg" alt="Room 2c" />
+            </div>
             <div class="card-body">
               <h4>AC Room</h4>
               <p>Cool comfort for peaceful rest.</p>
             </div>
           </article>
 
-          <article class="card" role="listitem">
-            <img
-              src="https://picsum.photos/seed/room3/800/600"
-              alt="Family Room"
-            />
+          <!-- ROOM 3 -->
+          <article class="card">
+            <div class="card-slider">
+              <img src="family_1.jpg" alt="Room 3a" />
+              <img src="family_2.jpg" alt="Room 3b" />
+              <img src="family_3.jpg" alt="Room 3c" />
+            </div>
             <div class="card-body">
               <h4>Family Room</h4>
               <p>Perfect for families & groups.</p>
             </div>
           </article>
 
-          <article class="card" role="listitem">
-            <img
-              src="https://picsum.photos/seed/room4/800/600"
-              alt="Dining Area"
-            />
+          <!-- ROOM 4 -->
+          <article class="card">
+            <div class="card-slider">
+              <img
+                src="https://picsum.photos/seed/room4a/800/600"
+                alt="Room 4a"
+              />
+              <img
+                src="https://picsum.photos/seed/room4b/800/600"
+                alt="Room 4b"
+              />
+              <img
+                src="https://picsum.photos/seed/room4c/800/600"
+                alt="Room 4c"
+              />
+            </div>
             <div class="card-body">
               <h4>Dining Area</h4>
               <p>Clean, homely meals every day.</p>
             </div>
           </article>
 
-          <article class="card" role="listitem">
-            <img src="https://picsum.photos/seed/room5/800/600" alt="Lobby" />
+          <!-- ROOM 5 -->
+          <article class="card">
+            <div class="card-slider">
+              <img
+                src="https://picsum.photos/seed/room5a/800/600"
+                alt="Room 5a"
+              />
+              <img
+                src="https://picsum.photos/seed/room5b/800/600"
+                alt="Room 5b"
+              />
+              <img
+                src="https://picsum.photos/seed/room5c/800/600"
+                alt="Room 5c"
+              />
+            </div>
             <div class="card-body">
               <h4>Lobby & Seating</h4>
               <p>Relax with friendly hospitality.</p>
             </div>
           </article>
-
-          <article class="card" role="listitem">
-            <img src="https://picsum.photos/seed/room6/800/600" alt="Suite" />
-            <div class="card-body">
-              <h4>Suite</h4>
-              <p>Extra space and comfort for you.</p>
-            </div>
-          </article>
         </div>
-
+        <div class="room-dots"></div>
         <button class="room-btn next" aria-label="Next rooms">❯</button>
       </div>
     </section>
@@ -170,47 +193,21 @@
       </p>
     </section>
 
-    <!-- BOOKING + MAP -->
+    <!-- BOOKING -->
     <section id="booking" class="booking-map-section">
       <h3>Book a Room / Find Us</h3>
-
       <div class="booking-map-grid">
         <div class="booking-form-wrap">
-          <form id="bookingForm" class="booking" novalidate>
+          <form id="bookingForm" novalidate>
             <div class="row">
-              <div>
-                <label for="name">Full Name</label
-                ><input
-                  id="name"
-                  name="name"
-                  required
-                  placeholder="Your name"
-                />
-              </div>
-              <div>
-                <label for="phone">Phone</label
-                ><input
-                  id="phone"
-                  name="phone"
-                  required
-                  placeholder="Mobile number"
-                />
-              </div>
+              <div><label>Name</label><input id="name" required /></div>
+              <div><label>Phone</label><input id="phone" required /></div>
             </div>
-
             <div class="row">
+              <div><label>Email</label><input id="email" type="email" /></div>
               <div>
-                <label for="email">Email</label
-                ><input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="you@example.com"
-                />
-              </div>
-              <div>
-                <label for="guests">Guests</label
-                ><select id="guests" name="guests">
+                <label>Guests</label>
+                <select id="guests">
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -218,36 +215,29 @@
                 </select>
               </div>
             </div>
-
             <div class="row">
               <div>
-                <label for="checkin">Check-in</label
-                ><input id="checkin" name="checkin" type="date" required />
+                <label>Check-in</label
+                ><input id="checkin" type="date" required />
               </div>
               <div>
-                <label for="checkout">Check-out</label
-                ><input id="checkout" name="checkout" type="date" required />
+                <label>Check-out</label
+                ><input id="checkout" type="date" required />
               </div>
             </div>
-
-            <label for="message">Special Requests</label>
             <textarea
               id="message"
-              name="message"
               rows="3"
               placeholder="Any requests..."
             ></textarea>
-
             <button class="btn primary" type="submit">
               Send Booking Request
             </button>
-            <p id="bookingStatus" class="small" aria-live="polite"></p>
+            <p id="bookingStatus" class="small"></p>
           </form>
         </div>
-
         <div class="map-container">
           <iframe
-            title="Semiliguda Inn Location"
             src="https://www.google.com/maps?q=18.7057514,82.8527222&z=17&output=embed"
             loading="lazy"
           ></iframe>
@@ -258,8 +248,9 @@
               href="https://maps.app.goo.gl/nQfadJeKSMwYwHtJ7?g_st=aw"
               target="_blank"
               class="btn"
-              >Open in Google Maps</a
             >
+              Open in Google Maps
+            </a>
           </div>
         </div>
       </div>
@@ -274,7 +265,7 @@
           <p>
             💬
             <a href="https://wa.me/917077574333" target="_blank"
-              >+91 70775 74333 (WhatsApp)</a
+              >+91 70775 74333</a
             >
           </p>
           <p>
@@ -285,8 +276,7 @@
         <div class="amenities">
           <strong>Amenities</strong>
           <p>
-            Complimentary breakfast • Free Wi-Fi • Hygienic food • Hot water •
-            Geyser • Smart TV
+            Complimentary breakfast • Free Wi-Fi • Hot water • Geyser • Smart TV
           </p>
         </div>
       </div>
@@ -299,4 +289,3 @@
     <script src="script.js"></script>
   </body>
 </html>
-
