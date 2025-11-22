@@ -34,7 +34,9 @@
         <button class="btn primary" onclick="scrollToSection('booking')">
           Book Now
         </button>
-        <button class="btn" onclick="scrollToSection('contact')">Contact</button>
+        <button class="btn" onclick="scrollToSection('contact')">
+          Contact
+        </button>
       </nav>
 
       <button
@@ -175,7 +177,6 @@
       <div class="booking-map-grid">
         <div class="booking-form-wrap">
           <form id="bookingForm" novalidate>
-
             <!-- ROW 1 -->
             <div class="row">
               <div>
@@ -229,13 +230,16 @@
               </select>
             </div>
 
-            <div id="bedPreview" style="display:none; margin-top:10px;">
+            <div id="bedPreview" style="display: none; margin-top: 10px">
               <img
                 id="bedPreviewImg"
                 src=""
-                style="width:100%; max-width:300px; border-radius:8px;"
+                style="width: 100%; max-width: 300px; border-radius: 8px"
               />
-              <p id="bedPreviewText" style="font-weight:600; margin-top:5px;"></p>
+              <p
+                id="bedPreviewText"
+                style="font-weight: 600; margin-top: 5px"
+              ></p>
             </div>
 
             <!-- REQUEST MESSAGE -->
@@ -310,8 +314,10 @@
       <p>© 2025 SemiligudaInn | Hygienic • Affordable • Comfortable</p>
 
       <p>
-        © SOFTPARK IT SOLUTIONS  
-        <a href="https://softparkodisha.com/" target="_blank">softparkodisha.com</a>
+        © SOFTPARK IT SOLUTIONS
+        <a href="https://softparkodisha.com/" target="_blank"
+          >softparkodisha.com</a
+        >
       </p>
 
       <p>
@@ -338,20 +344,20 @@
         const bedData = {
           single: {
             img: "images/single_bed.jpg",
-            text: "Single Bed — Ideal for solo travellers."
+            text: "Single Bed — Ideal for solo travellers.",
           },
           double: {
             img: "images/double_bed.jpg",
-            text: "Double Bed — Perfect for couples."
+            text: "Double Bed — Perfect for couples.",
           },
           combined: {
             img: "images/combined_bed.jpg",
-            text: "Combined Bed — Two beds joined together."
+            text: "Combined Bed — Two beds joined together.",
           },
           family: {
             img: "images/family_bed.jpg",
-            text: "Family Bed — Suitable for groups & families."
-          }
+            text: "Family Bed — Suitable for groups & families.",
+          },
         };
 
         img.src = bedData[type].img;
